@@ -4,6 +4,8 @@
 
 LexGuard is an AI-powered legal-awareness platform that reads contracts, terms of service, privacy policies, leases, and employment agreements — and surfaces the risky parts in plain English. Built for ordinary people, not lawyers.
 
+**Live demo:** https://lexguard-alpha.vercel.app
+
 > ⚠️ LexGuard is an awareness tool. It does not provide legal advice.
 
 ---

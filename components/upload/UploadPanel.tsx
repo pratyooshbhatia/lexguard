@@ -59,12 +59,18 @@ export function UploadPanel({ initialText }: { initialText?: string }) {
         role="tablist"
         aria-label="Choose how to provide your document"
         className="inline-flex gap-1 rounded-xl bg-slate-100 p-1"
+        onKeyDown={(e) => {
+          if (e.key === "ArrowRight") setTab("paste");
+          if (e.key === "ArrowLeft") setTab("upload");
+        }}
       >
         {(["upload", "paste"] as Tab[]).map((t) => (
           <button
             key={t}
             role="tab"
+            id={`tab-${t}`}
             aria-selected={tab === t}
+            aria-controls="tab-panel"
             onClick={() => setTab(t)}
             className={cn(
               "rounded-lg px-4 py-2 text-sm font-medium transition-all",
@@ -79,7 +85,7 @@ export function UploadPanel({ initialText }: { initialText?: string }) {
       </div>
 
       {/* Panel */}
-      <div role="tabpanel">
+      <div role="tabpanel" id="tab-panel" aria-labelledby={`tab-${tab}`}>
         {tab === "upload" ? (
           <Dropzone file={file} onFile={setFile} disabled={busy} />
         ) : (
@@ -91,19 +97,20 @@ export function UploadPanel({ initialText }: { initialText?: string }) {
       {error ? <ErrorState error={error} /> : null}
 
       {/* Submit */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         {tab === "upload" && file ? (
           <button
             onClick={() => setFile(null)}
-            className="text-sm text-slate-400 underline-offset-2 hover:text-slate-600 hover:underline"
+            className="self-start text-sm text-slate-400 underline-offset-2 hover:text-slate-600 hover:underline"
           >
             Remove file
           </button>
-        ) : <span />}
+        ) : <span className="hidden sm:block" />}
 
         <Button
           size="lg"
           disabled={!canSubmit}
+          className="w-full sm:w-auto"
           onClick={() => submit(tab === "upload" ? { file: file! } : { text })}
         >
           Analyze document

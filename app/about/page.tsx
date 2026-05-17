@@ -65,11 +65,35 @@ export default function AboutPage() {
           It is not a law firm. It is a transparency tool built for ordinary people.
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
-          {["Next.js 14", "Gemini 2.5 Flash", "TypeScript", "PWA", "WCAG AA"].map((t) => (
+          {["Next.js 14", "Gemini 2.5 Flash", "TypeScript", "PWA", "WCAG AA", "Edge Runtime"].map((t) => (
             <Pill key={t}>{t}</Pill>
           ))}
         </div>
       </header>
+
+      {/* Quick summary for evaluators */}
+      <section
+        aria-labelledby="summary-heading"
+        className="mb-12 rounded-2xl border border-brand-100 bg-brand-50 p-6"
+      >
+        <h2 id="summary-heading" className="mb-3 font-display text-base font-semibold text-brand-900">
+          Quick evaluation summary
+        </h2>
+        <ul className="space-y-2 text-sm text-brand-800" role="list">
+          <li className="flex items-start gap-2">
+            <span aria-hidden className="mt-0.5 font-bold">→</span>
+            <span><strong>Primary AI use:</strong> Google Gemini 2.5 Flash for legal document analysis, structured JSON extraction, and multimodal PDF/image processing — all server-side via the official <code className="rounded bg-brand-100 px-1 font-mono text-xs">@google/generative-ai</code> SDK.</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span aria-hidden className="mt-0.5 font-bold">→</span>
+            <span><strong>Key differentiator:</strong> Zero dependencies for OCR or PDF parsing — Gemini Vision handles both, enabling multimodal document understanding in a single API call.</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span aria-hidden className="mt-0.5 font-bold">→</span>
+            <span><strong>Live demo:</strong> <a href="/analyze" className="underline underline-offset-2 hover:text-brand-700">lexguard.app/analyze</a> — paste any Terms of Service text or upload a PDF to see the full analysis pipeline in action.</span>
+          </li>
+        </ul>
+      </section>
 
       <div className="space-y-12">
 

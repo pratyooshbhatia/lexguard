@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useAnalysisStore } from "@/lib/store/analysis-store";
 import { RiskScoreDial } from "@/components/analysis/RiskScoreDial";
 import { RiskCardStack } from "@/components/analysis/RiskCardStack";
@@ -9,6 +10,7 @@ import { categoryLabel } from "@/lib/utils/format";
 
 export default function ResultsPage() {
   const { result, reset } = useAnalysisStore();
+  const router = useRouter();
 
   if (!result) {
     return (
@@ -81,8 +83,11 @@ export default function ResultsPage() {
 
       {/* Metadata + CTA */}
       <div className="mt-10 flex flex-col items-center gap-3 text-center">
-        <Button asChild variant="ghost" onClick={reset}>
-          <Link href="/analyze">← Analyze another document</Link>
+        <Button
+          variant="ghost"
+          onClick={() => { reset(); router.push("/analyze"); }}
+        >
+          ← Analyze another document
         </Button>
         <p className="text-xs text-slate-400">
           Analyzed {result.metadata.wordCount.toLocaleString()} words in {(result.metadata.durationMs / 1000).toFixed(1)}s ·{" "}

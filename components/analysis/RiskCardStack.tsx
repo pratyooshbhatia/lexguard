@@ -4,6 +4,7 @@ import { useState } from "react";
 import { RiskCard } from "./RiskCard";
 import { Button } from "@/components/ui/Button";
 import { useSwipe } from "@/hooks/useSwipe";
+import { cn } from "@/lib/utils/cn";
 import type { RiskClause } from "@/types/analysis";
 
 /**
@@ -47,17 +48,37 @@ export function RiskCardStack({ clauses }: { clauses: RiskClause[] }) {
         <RiskCard clause={current} />
       </div>
 
+      {/* Dot indicators (up to 10) */}
+      {total <= 10 && (
+        <div className="mt-3 flex items-center justify-center gap-1.5" aria-hidden>
+          {clauses.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              className={cn(
+                "h-2 rounded-full transition-all duration-200 focus:outline-none",
+                i === index ? "w-5 bg-brand-600" : "w-2 bg-slate-200 hover:bg-slate-300"
+              )}
+            />
+          ))}
+        </div>
+      )}
+
       <nav
         aria-label="Carousel controls"
         className="mt-4 flex items-center justify-between"
       >
-        <Button variant="ghost" size="sm" onClick={prev} disabled={index === 0}>
-          ← Previous
+        <Button variant="ghost" size="sm" onClick={prev} disabled={index === 0}
+          className="min-w-[5rem] touch-manipulation"
+        >
+          ← Prev
         </Button>
         <p className="text-xs text-ink-muted" aria-live="polite">
           {index + 1} of {total}
         </p>
-        <Button variant="ghost" size="sm" onClick={next} disabled={index === total - 1}>
+        <Button variant="ghost" size="sm" onClick={next} disabled={index === total - 1}
+          className="min-w-[5rem] touch-manipulation"
+        >
           Next →
         </Button>
       </nav>
