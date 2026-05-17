@@ -34,13 +34,13 @@ const config: Config = {
           600: "#2E55E0",
           700: "#2444B8"
         },
-        // Risk semantic tokens — used in RiskCard and RiskScoreDial
+        // Keep custom risk palette for the SVG score dial stroke utilities
         risk: {
           low: "#16A34A",
           medium: "#D97706",
           high: "#DC2626",
           critical: "#991B1B"
-        }
+        },
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],

@@ -1,29 +1,19 @@
 {
-  "name": "LexGuard — Understand contracts before you sign",
+  "name": "LexGuard",
   "short_name": "LexGuard",
-  "description": "Plain-English risk analysis for contracts, terms of service, and policies.",
-  "start_url": "/?source=pwa",
+  "description": "Understand contracts before you sign. AI-powered plain-English risk analysis.",
+  "start_url": "/analyze",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#F8FAFC",
-  "theme_color": "#FFFFFF",
-  "categories": ["productivity", "utilities", "finance"],
+  "theme_color": "#2E55E0",
   "lang": "en",
-  "dir": "ltr",
+  "categories": ["productivity", "utilities", "finance"],
   "icons": [
     { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
     { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
-  ],
-  "screenshots": [
-    {
-      "src": "/screenshots/analyze.png",
-      "sizes": "1080x1920",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Analyze a contract"
-    }
   ],
   "shortcuts": [
     {
@@ -41,5 +31,17 @@
       "text": "text",
       "url": "url"
     }
-  }
+  },
+  "file_handlers": [
+    {
+      "action": "/analyze",
+      "accept": {
+        "application/pdf": [".pdf"],
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
+        "image/png": [".png"],
+        "image/jpeg": [".jpg", ".jpeg"],
+        "text/plain": [".txt"]
+      }
+    }
+  ]
 }

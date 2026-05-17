@@ -8,15 +8,36 @@ export function severityToBand(score: number): RiskSeverity {
 }
 
 export function severityLabel(s: RiskSeverity): string {
-  return { low: "Low", medium: "Medium", high: "High", critical: "Critical" }[s];
+  return { low: "Low risk", medium: "Medium risk", high: "High risk", critical: "Critical risk" }[s];
 }
 
+/**
+ * Badge token — used on inline <Badge severity> chips.
+ * Standard Tailwind color names so purge picks them up reliably.
+ */
 export function severityToken(s: RiskSeverity): string {
   return {
-    low: "text-risk-low border-risk-low/30 bg-risk-low/10",
-    medium: "text-risk-medium border-risk-medium/30 bg-risk-medium/10",
-    high: "text-risk-high border-risk-high/30 bg-risk-high/10",
-    critical: "text-risk-critical border-risk-critical/40 bg-risk-critical/10"
+    low:      "bg-green-50  text-green-800  border-green-200",
+    medium:   "bg-amber-50  text-amber-800  border-amber-200",
+    high:     "bg-orange-50 text-orange-800 border-orange-200",
+    critical: "bg-red-50    text-red-800    border-red-200"
+  }[s];
+}
+
+/**
+ * Card-level severity styling — accent border + very light bg for the top band.
+ */
+export function severityCardAccent(s: RiskSeverity): {
+  border: string;
+  banner: string;
+  bannerText: string;
+  dot: string;
+} {
+  return {
+    low:      { border: "border-green-200",  banner: "bg-green-50",  bannerText: "text-green-800",  dot: "bg-green-500"  },
+    medium:   { border: "border-amber-200",  banner: "bg-amber-50",  bannerText: "text-amber-800",  dot: "bg-amber-500"  },
+    high:     { border: "border-orange-200", banner: "bg-orange-50", bannerText: "text-orange-800", dot: "bg-orange-500" },
+    critical: { border: "border-red-200",    banner: "bg-red-50",    bannerText: "text-red-800",    dot: "bg-red-500"    }
   }[s];
 }
 

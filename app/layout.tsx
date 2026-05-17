@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import { APP_DESCRIPTION, APP_NAME, APP_TAGLINE } from "@/lib/constants";
+import { Nav } from "@/components/layout/Nav";
 import { ServiceWorkerRegister } from "@/components/pwa/ServiceWorkerRegister";
+import { APP_DESCRIPTION, APP_NAME } from "@/lib/constants";
 import "./globals.css";
 
 const inter = Inter({
@@ -11,17 +12,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: { default: `${APP_NAME} — ${APP_TAGLINE}`, template: `%s · ${APP_NAME}` },
+  title: { default: APP_NAME, template: `%s · ${APP_NAME}` },
   description: APP_DESCRIPTION,
   applicationName: APP_NAME,
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: APP_NAME, statusBarStyle: "default" },
   formatDetection: { telephone: false },
-  openGraph: {
-    title: APP_NAME,
-    description: APP_DESCRIPTION,
-    type: "website"
-  }
+  openGraph: { title: APP_NAME, description: APP_DESCRIPTION, type: "website" }
 };
 
 export const viewport: Viewport = {
@@ -29,21 +26,22 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
-    { media: "(prefers-color-scheme: dark)", color: "#0F172A" }
+    { media: "(prefers-color-scheme: light)", color: "#2E55E0" },
+    { media: "(prefers-color-scheme: dark)",  color: "#2E55E0" }
   ]
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="font-sans antialiased">
+      <body className="min-h-screen bg-slate-50 font-sans antialiased">
         <a
           href="#main"
-          className="sr-only-focusable fixed left-3 top-3 z-50 rounded-md bg-ink px-3 py-2 text-sm text-white"
+          className="sr-only focus-visible:not-sr-only fixed left-3 top-3 z-50 rounded-md bg-brand-600 px-3 py-2 text-sm font-medium text-white"
         >
           Skip to main content
         </a>
+        <Nav />
         {children}
         <ServiceWorkerRegister />
       </body>

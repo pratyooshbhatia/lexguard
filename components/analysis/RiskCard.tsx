@@ -1,60 +1,87 @@
-import { Badge } from "@/components/ui/Badge";
-import { Card } from "@/components/ui/Card";
-import { categoryLabel } from "@/lib/utils/format";
+import { categoryLabel, severityCardAccent, severityLabel } from "@/lib/utils/format";
+import { cn } from "@/lib/utils/cn";
 import type { RiskClause } from "@/types/analysis";
 
-export function RiskCard({ clause }: { clause: RiskClause }) {
+function Section({ heading, children }: { heading: string; children: React.ReactNode }) {
   return (
-    <Card className="space-y-4">
-      <header className="flex items-start justify-between gap-3">
-        <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">
-            {categoryLabel(clause.clauseType)}
-          </p>
-          <h3 className="mt-1 font-display text-lg font-semibold">{clause.title}</h3>
-        </div>
-        <Badge severity={clause.severity} />
-      </header>
+    <section>
+      <h4 className="mb-1.5 text-[11px] font-semibold uppercase tracking-widest text-slate-400">
+        {heading}
+      </h4>
+      {children}
+    </section>
+  );
+}
 
-      <blockquote className="rounded-xl border-l-4 border-ink/10 bg-surface-subtle p-3 text-sm italic text-ink-muted">
-        “{clause.quotedExcerpt}”
-      </blockquote>
+export function RiskCard({ clause }: { clause: RiskClause }) {
+  const accent = severityCardAccent(clause.severity);
 
-      <section>
-        <h4 className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
-          In plain English
-        </h4>
-        <p className="mt-1 text-sm leading-relaxed">{clause.plainEnglish}</p>
-      </section>
+  return (
+    <article
+      className={cn(
+        "overflow-hidden rounded-2xl border bg-white shadow-card",
+        accent.border
+      )}
+    >
+      {/* Severity banner */}
+      <div className={cn("flex items-center gap-2.5 px-5 py-3", accent.banner)}>
+        <span
+          aria-hidden
+          className={cn("h-2 w-2 flex-shrink-0 rounded-full", accent.dot)}
+        />
+        <span className={cn("text-sm font-semibold", accent.bannerText)}>
+          {severityLabel(clause.severity)}
+        </span>
+        <span className="mx-1 text-slate-300" aria-hidden>·</span>
+        <span className="text-sm text-slate-500">{categoryLabel(clause.clauseType)}</span>
+      </div>
 
-      <section>
-        <h4 className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
-          Why this matters
-        </h4>
-        <p className="mt-1 text-sm leading-relaxed">{clause.whyItMatters}</p>
-      </section>
+      {/* Card body */}
+      <div className="space-y-5 p-5">
+        <h3 className="font-display text-lg font-semibold leading-snug text-slate-900">
+          {clause.title}
+        </h3>
 
-      <section>
-        <h4 className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
-          What could happen
-        </h4>
-        <ul className="mt-1 list-disc space-y-1 pl-5 text-sm">
-          {clause.realWorldConsequences.map((c) => (
-            <li key={c}>{c}</li>
-          ))}
-        </ul>
-      </section>
+        {/* Quoted excerpt */}
+        <blockquote className="rounded-xl border-l-4 border-slate-200 bg-slate-50 px-4 py-3 text-sm italic leading-relaxed text-slate-600">
+          "{clause.quotedExcerpt}"
+        </blockquote>
 
-      <section>
-        <h4 className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
-          Suggested next steps
-        </h4>
-        <ul className="mt-1 list-disc space-y-1 pl-5 text-sm">
-          {clause.suggestedActions.map((a) => (
-            <li key={a}>{a}</li>
-          ))}
-        </ul>
-      </section>
-    </Card>
+        <Section heading="In plain English">
+          <p className="text-sm leading-relaxed text-slate-700">{clause.plainEnglish}</p>
+        </Section>
+
+        <Section heading="Why this matters">
+          <p className="text-sm leading-relaxed text-slate-700">{clause.whyItMatters}</p>
+        </Section>
+
+        <Section heading="What could happen">
+          <ul className="space-y-1.5 text-sm text-slate-700" role="list">
+            {clause.realWorldConsequences.map((c, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <span aria-hidden className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-slate-400" />
+                {c}
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section heading="Suggested next steps">
+          <ul className="space-y-1.5 text-sm" role="list">
+            {clause.suggestedActions.map((a, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span
+                  aria-hidden
+                  className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-brand-50 text-[11px] font-bold text-brand-600"
+                >
+                  {i + 1}
+                </span>
+                {a}
+              </li>
+            ))}
+          </ul>
+        </Section>
+      </div>
+    </article>
   );
 }

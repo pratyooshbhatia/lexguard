@@ -5,13 +5,16 @@ export function ErrorState({ error, action }: { error: AnalysisError; action?: R
   return (
     <div
       role="alert"
-      className="rounded-2xl border border-risk-high/20 bg-risk-high/5 p-6 text-center"
+      className="rounded-2xl border border-red-200 bg-red-50 px-5 py-4"
     >
-      <h2 className="font-display text-base font-semibold text-risk-high">
-        We hit a problem
-      </h2>
-      <p className="mt-2 text-sm text-ink-muted">{error.message}</p>
-      {action ? <div className="mt-4 flex justify-center">{action}</div> : null}
+      <div className="flex items-start gap-3">
+        <span aria-hidden className="mt-0.5 text-lg">⚠️</span>
+        <div className="flex-1">
+          <p className="text-sm font-semibold text-red-800">Something went wrong</p>
+          <p className="mt-0.5 text-sm text-red-600">{error.message}</p>
+        </div>
+      </div>
+      {action ? <div className="mt-3 flex justify-end">{action}</div> : null}
     </div>
   );
 }
