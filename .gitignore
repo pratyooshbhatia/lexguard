@@ -1,0 +1,17 @@
+.claude/
+node_modules/
+.next/
+out/
+build/
+.DS_Store
+*.log
+.env
+.env.local
+.env*.local
+.vercel
+.turbo
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+*.log
+dev.err
